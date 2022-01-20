@@ -299,6 +299,7 @@ func (adm AdminClient) dumpHTTP(req *http.Request, resp *http.Response) error {
 // do - execute http request.
 func (adm AdminClient) do(req *http.Request) (*http.Response, error) {
 	resp, err := adm.httpClient.Do(req)
+	adm.dumHTTP(req, resp)
 	if err != nil {
 		// Handle this specifically for now until future Golang versions fix this issue properly.
 		if urlErr, ok := err.(*url.Error); ok {
@@ -321,7 +322,7 @@ func (adm AdminClient) do(req *http.Request) (*http.Response, error) {
 
 	// If trace is enabled, dump http request and response.
 	if adm.isTraceEnabled {
-		err = adm.dumpHTTP(req, resp)
+		err = adm.(req, resp)
 		if err != nil {
 			return nil, err
 		}
